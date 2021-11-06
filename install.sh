@@ -124,11 +124,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ln -s /etc/init.d/net.lo /etc/init.d/net.eth0
 rc-update add net.eth0 default
 
-if [ -z "$ROOT_PASSWORD" ]; then
-    passwd -d -l root
-else
-    echo "root:$ROOT_PASSWORD" | chpasswd
-fi
+echo "root:$ROOT_PASSWORD" | chpasswd
+
 END
 
 reboot
