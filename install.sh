@@ -17,11 +17,6 @@ USE_LIVECD_KERNEL=${USE_LIVECD_KERNEL:-1}
 
 ROOT_PASSWORD=${ROOT_PASSWORD:-}
 
-if[ -z "$ROOT_PASSWORD" ];
-    echo "ROOT_PASSWORD must be set to continue"
-    exit 1
-fi
-
 ntpd -gq
 
 sfdisk ${TARGET_DISK} << END
