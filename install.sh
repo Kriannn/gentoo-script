@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -e
 
 GENTOO_MIRROR="http://distfiles.gentoo.org"
@@ -16,13 +15,10 @@ GRUB_PLATFORMS=pc
 
 USE_LIVECD_KERNEL=${USE_LIVECD_KERNEL:-1}
 
-SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY:-}
 ROOT_PASSWORD=${ROOT_PASSWORD:-}
 
-echo "### Checking configuration..."
-
-if [ -z "$SSH_PUBLIC_KEY" ] && [ -z "$ROOT_PASSWORD" ]; then
-    echo "SSH_PUBLIC_KEY or ROOT_PASSWORD must be set to continue"
+if[ -z "$ROOT_PASSWORD" ]; then
+    echo "ROOT_PASSWORD must be set to continue"
     exit 1
 fi
 
