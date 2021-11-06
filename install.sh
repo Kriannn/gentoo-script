@@ -74,7 +74,6 @@ cp -v /etc/resolv.conf /mnt/gentoo/etc/
 
 cat >> /mnt/gentoo/etc/fstab << END
 
-# added by gentoo installer
 LABEL=boot /boot ext4 noauto,noatime 1 2
 LABEL=swap none  swap sw             0 0
 LABEL=root /     ext4 noatime        0 1
@@ -114,13 +113,11 @@ emerge grub
 
 cat >> /etc/portage/make.conf << IEND
 
-# added by gentoo installer
 GRUB_PLATFORMS="$GRUB_PLATFORMS"
 IEND
 
 cat >> /etc/default/grub << IEND
 
-# added by gentoo installer
 GRUB_CMDLINE_LINUX="net.ifnames=0"
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=0
