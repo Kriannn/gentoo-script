@@ -10,8 +10,8 @@ USE_LIVECD_KERNEL=0 - compile kernel
 
 ```shell
 # livecd kernel with root password
-USE_LIVECD_KERNEL=1 ROOT_PASSWORD=Gentoo123 ./gentoo-quick-installer.sh
+USE_LIVECD_KERNEL=1 ROOT_PASSWORD=Gentoo123 ./install.sh
 
 # Compiled kernel with root password
-USE_LIVECD_KERNEL=0 ROOT_PASSWORD=Gentoo123 ./gentoo-quick-installer.sh
+USE_LIVECD_KERNEL=0 ROOT_PASSWORD=Gentoo123 ./install.sh
 ```
