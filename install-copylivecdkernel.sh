@@ -13,8 +13,6 @@ TARGET_SWAP_SIZE=1G
 
 GRUB_PLATFORMS=pc
 
-USE_LIVECD_KERNEL=${USE_LIVECD_KERNEL:-1}
-
 ROOT_PASSWORD=${ROOT_PASSWORD:-}
 
 ntpd -gq
@@ -53,14 +51,11 @@ tar xvpf "$(basename "$STAGE3_URL")" --xattrs-include='*.*' --numeric-owner
 
 rm -fv "$(basename "$STAGE3_URL")"
 
-if [ "$USE_LIVECD_KERNEL" != 0 ]; then
+LIVECD_KERNEL_VERSION=$(cut -d " " -f 3 < /proc/version)
 
-    LIVECD_KERNEL_VERSION=$(cut -d " " -f 3 < /proc/version)
-
-    cp -v "/mnt/cdrom/boot/gentoo" "/mnt/gentoo/boot/vmlinuz-$LIVECD_KERNEL_VERSION"
-    cp -v "/mnt/cdrom/boot/gentoo.igz" "/mnt/gentoo/boot/initramfs-$LIVECD_KERNEL_VERSION.img"
-    cp -vR "/lib/modules/$LIVECD_KERNEL_VERSION" "/mnt/gentoo/lib/modules/"
-fi
+cp -v "/mnt/cdrom/boot/gentoo" "/mnt/gentoo/boot/vmlinuz-$LIVECD_KERNEL_VERSION"
+cp -v "/mnt/cdrom/boot/gentoo.igz" "/mnt/gentoo/boot/initramfs-$LIVECD_KERNEL_VERSION.img"
+cp -vR "/lib/modules/$LIVECD_KERNEL_VERSION" "/mnt/gentoo/lib/modules/"
 
 mkdir -p /mnt/gentoo/etc/kernels
 cp -v /etc/kernels/* /mnt/gentoo/etc/kernels
@@ -93,16 +88,6 @@ cp -f /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf
 emerge-webrsync
 
 emerge sys-kernel/gentoo-sources
-
-if [ "$USE_LIVECD_KERNEL" = 0 ]; then
-
-    echo "sys-kernel/genkernel -firmware" > /etc/portage/package.use/genkernel
-    echo "sys-apps/util-linux static-libs" >> /etc/portage/package.use/genkernel
-
-    emerge sys-kernel/genkernel
-
-    genkernel all --kernel-config=$(find /etc/kernels -type f -iname 'kernel-config-*' | head -n 1)
-fi
 
 emerge grub
 
